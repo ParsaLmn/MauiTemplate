@@ -1,0 +1,15 @@
+﻿@page "/"
+@inherits AppComponentBase
+@attribute [Authorize]
+
+<h1>سلام</h1>
+
+<button class="btn btn-primary btn-sm" @onclick=GotoSignIn>صفحه ورود</button>
+
+@code {
+    void GotoSignIn()
+    {
+        NavigationManager.NavigateTo("/sign-in");
+    }
+}
+

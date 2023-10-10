@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Exceptions\BadRequestException.cs" />
+    <Compile Remove="Exceptions\ConflictException.cs" />
+    <Compile Remove="Exceptions\DomainLogicException.cs" />
+    <Compile Remove="Exceptions\ErrorResourcePayload.cs" />
+    <Compile Remove="Exceptions\ForbiddenException.cs" />
+    <Compile Remove="Exceptions\KnownException.cs" />
+    <Compile Remove="Exceptions\ResourceNotFoundException.cs" />
+    <Compile Remove="Exceptions\ResourceValidationException.cs" />
+    <Compile Remove="Exceptions\RestErrorInfo.cs" />
+    <Compile Remove="Exceptions\RestException.cs" />
+    <Compile Remove="Exceptions\TooManyRequestsExceptions.cs" />
+    <Compile Remove="Exceptions\UnauthorizedException.cs" />
+    <Compile Remove="Exceptions\UnknownException.cs" />
+    <Compile Remove="Resources\General.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\General.fa.resx" />
+    <EmbeddedResource Remove="Resources\General.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+  </ItemGroup>
+
+</Project>
