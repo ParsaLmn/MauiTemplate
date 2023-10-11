@@ -1,19 +1,19 @@
 ﻿
- <CascadingAuthenticationState> 
+ @* <CascadingAuthenticationState>  *@
 <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(MainLayout).Assembly }" PreferExactMatches="true">
     <Found Context="routeData">
 
-      @*   <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
- *@
-           <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+ 
+         @*   <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
         <NotAuthorized>
         <NotAuthorizedComponent />
         </NotAuthorized>
         <Authorizing>
         <LoadingComponent Class="pt-5" Text="درحال دریافت اطلاعات..." />
         </Authorizing>
-        </AuthorizeRouteView> 
+        </AuthorizeRouteView>  *@
 
     </Found>
     <NotFound>
@@ -23,4 +23,4 @@
         <LoadingComponent Class="pt-5" Text="درحال دریافت اطلاعات..." />
     </Navigating>
 </Router>
- </CascadingAuthenticationState> 
+ @* </CascadingAuthenticationState>  *@

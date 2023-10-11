@@ -288,3 +288,23 @@ input[type=number] {
 .bit-brc-itm {
     font-size: unset !important
 }
+
+.main-header {
+    left: 0
+}
+
+.main {
+    padding-right: 12.875rem;
+    padding-left: unset !important
+}
+
+.nav-menu {
+    right: 0;
+    background-color: #fff !important
+}
+
+@media screen and (max-width: 75em) {
+    .main {
+        padding-right: 0
+    }
+}

@@ -1,0 +1,118 @@
+﻿@page "/tools"
+@using Common.CustomComponents
+@using Microsoft.Maui.ApplicationModel.Communication;
+
+<h3>MauiToolss</h3>
+<div class="p-2 ">@platform</div>
+
+@if (string.IsNullOrEmpty(_message) is false)
+{
+    <p class="text-danger">@_message</p>
+}
+
+<BitLoadingButton OnClick="getContact" Class="btn btn-danger m-2">Get Contacts</BitLoadingButton>
+<BitLoadingButton OnClick="FlashLight" Class="btn btn-info text-white m-2">FlashLight</BitLoadingButton>
+<BitLoadingButton OnClick="LocationFunc" Class="btn btn-warning text-white m-2">Location</BitLoadingButton>
+<small class="alert alert-success">@_location</small>
+<BitLoadingButton OnClick="TakePhoto" Class="btn btn-primary text-white m-2">TakePhoto</BitLoadingButton>
+
+@foreach (var item in _list)
+{
+    <div>@item</div>
+    <br />
+}
+
+@code {
+    string _location;
+    string _message;
+    bool _flash = false;
+    string platform;
+    List<string> _list = new();
+    protected override async Task OnInitializedAsync()
+    {
+        platform = DeviceInfo.Current.Platform.ToString();
+
+        await base.OnInitializedAsync();
+    }
+    async void getContact()
+    {
+        try
+        {
+            var contacts = await Contacts.Default.GetAllAsync();
+
+            foreach (var contact in contacts)
+                _list.Add(contact.DisplayName);
+        }
+        catch (Exception e)
+        {
+            _message = e.Message;
+        }
+        finally
+        {
+            _message = null;
+        }
+    }
+    async void FlashLight()
+    {
+        try
+        {
+            TimeSpan vibrationLength = TimeSpan.FromMilliseconds(100);
+            Vibration.Default.Vibrate(vibrationLength);
+
+            if (!_flash)
+                await Flashlight.Default.TurnOnAsync();
+            else
+                await Flashlight.Default.TurnOffAsync();
+
+            _flash = !_flash;
+        }
+        catch (FeatureNotSupportedException ex)
+        {
+            // Handle not supported on device exception
+            _message = ex.Message;
+        }
+        catch (PermissionException ex)
+        {
+            // Handle permission exception
+            _message = ex.Message;
+        }
+        catch (Exception ex)
+        {
+            // Unable to turn on/off flashlight
+            _message = ex.Message;
+        }
+    }
+    async void LocationFunc()
+    {
+        try
+        {
+            Location location = await Geolocation.Default.GetLastKnownLocationAsync();
+
+            if (location != null)
+                _location = $"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}";
+        }
+        catch (Exception ex)
+        {
+            // Unable to turn on/off flashlight
+            _message = ex.Message;
+        }
+    }
+    async void TakePhoto()
+    {
+        if (MediaPicker.Default.IsCaptureSupported)
+        {
+            FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+
+            if (photo != null)
+            {
+                // save the file into local storage
+                string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+                using Stream sourceStream = await photo.OpenReadAsync();
+                using FileStream localFileStream = File.OpenWrite(localFilePath);
+
+                await sourceStream.CopyToAsync(localFileStream);
+            }
+        }
+    }
+}

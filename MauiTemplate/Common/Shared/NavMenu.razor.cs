@@ -44,6 +44,13 @@ public partial class NavMenu
                 IconName = BitIconName.Count,
                 Url = "/counter",
             }
+           ,
+           new BitNavItem
+            {
+                Text = "tools",
+                IconName = BitIconName.Count,
+                Url = "/tools",
+            }
         };
         await base.OnInitializedAsync();
     }
